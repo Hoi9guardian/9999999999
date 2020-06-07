@@ -12,7 +12,7 @@ public class JDBCTemplate {
 	public static Connection getConnection() {
 		
 		Connection con = null;
-		
+		// DB ì„œë²„ ê³„ì • ì •ë³´ ì‚­ì œ...
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
@@ -25,10 +25,10 @@ public class JDBCTemplate {
 			con.setAutoCommit(false);
 			
 		} catch (ClassNotFoundException e) {
-			System.out.println("1. ¿¬°á½ÇÆÐ");
+			System.out.println("1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			e.printStackTrace();
 		} catch (SQLException e) {
-			System.out.println("2. °èÁ¤¿¬°á½ÇÆÐ");
+			System.out.println("2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			e.printStackTrace();
 		}
 		

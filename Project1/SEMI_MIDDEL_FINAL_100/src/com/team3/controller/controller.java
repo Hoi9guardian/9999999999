@@ -548,9 +548,9 @@ public class controller extends HttpServlet {
          }
 
          String host = "smtp.naver.com";
-         String user = "juihy1005";
-         String password = "wndp0303";
-
+         String user = "아이디 삭제";
+         String password = "비번 삭제";
+         // 개인 정보 보호 위해 계정 아이디 비번 삭제
          String to_email = m.getEmail();
 
          Properties props = new Properties();

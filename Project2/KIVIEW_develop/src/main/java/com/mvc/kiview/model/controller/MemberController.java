@@ -460,11 +460,12 @@ public class MemberController {
        // Mail Server 설정
       String charSet = "utf-8";
       String hostSMTP = "smtp.naver.com";
-      String hostSMTPid = "blue920708";
-      String hostSMTPpwd = "rsef8426$$";
+      // 계정 정보 삭제
+      String hostSMTPid = "계정정보삭제";
+      String hostSMTPpwd = "계정정보삭제";
 
       // 보내는 사람 EMail, 제목, 내용
-      String fromEmail = "blue920708@naver.com";
+      String fromEmail = "메일주속 삭제_개인정보";
       String fromName = "Kiview";
       String subject = "kiview에서 임시비밀번호가 발급되었습니다";
       String msg = "";
