@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+<configuration>
+	<typeAliases>
+		
+		<!-- 유치원 관련 -->
+		<typeAlias type="com.mvc.kiview.model.vo.ProvinceVo" alias="ProvinceVo"/>
+		<typeAlias type="com.mvc.kiview.model.vo.KinderVo" alias="KinderVo"/>
+		
+		
+		<!-- 카페 관련 -->
+		<typeAlias type="com.mvc.kiview.model.vo.CafeVo" alias="CafeVo"/>
+		<typeAlias type="com.mvc.kiview.model.vo.CafeBoardVo" alias="CafeBoardVo"/>
+		<typeAlias type="com.mvc.kiview.model.vo.CafeCategoryVo" alias="CafeCategoryVo"/>
+		<typeAlias type="com.mvc.kiview.model.vo.CafeMenuVo" alias="CafeMenuVo"/>
+		<typeAlias type="com.mvc.kiview.model.vo.CafeReplyVo" alias="CafeReplyVo"/>
+		<typeAlias type="com.mvc.kiview.model.vo.CafeMemberVo" alias="CafeMemberVo"/>
+		<typeAlias type="com.mvc.kiview.model.vo.CafePageVo" alias="CafePageVo"/>
+		<typeAlias type="com.mvc.kiview.model.vo.CafeChatVo" alias="CafeChatVo"/>
+		
+		<!-- 공지사항 -->
+		<typeAlias type="com.mvc.kiview.model.vo.NoticeVo" alias="NoticeVo"/>
+		<typeAlias type="com.mvc.kiview.model.vo.Criteria" alias="Criteria"/>
+		
+		<!-- 즐겨찾기 -->
+		<typeAlias type="com.mvc.kiview.model.vo.FavoriteVo" alias="FavoriteVo"/>
+		
+
+		
+		<!-- FAQVo -->
+		<typeAlias type="com.mvc.kiview.model.vo.FAQVo" alias="FAQVo"/>
+
+		<!-- 좋아요 -->
+		<typeAlias type="com.mvc.kiview.model.vo.LikeVo" alias="LikeVo"/>
+		
+		<!-- 회원 -->
+		<typeAlias type="com.mvc.kiview.model.vo.MemberVo" alias="MemberVo"/>
+		
+		<!-- 리뷰 -->
+		<typeAlias type="com.mvc.kiview.model.vo.ReviewVo" alias="ReviewVo"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="/mybatis/cafe-mapper.xml"/>
+		<mapper resource="/mybatis/kinder-mapper.xml"/>
+		<mapper resource="/mybatis/like-mapper.xml"/>
+		<mapper resource="/mybatis/member-mapper.xml"/>
+		<mapper resource="/mybatis/notice-mapper.xml"/>
+		<mapper resource="/mybatis/review-mapper.xml"/>
+	</mappers>
+
+</configuration>

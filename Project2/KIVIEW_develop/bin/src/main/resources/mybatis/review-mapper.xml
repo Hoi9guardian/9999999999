@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="review">
+   
+   <insert id="reviewInsert" parameterType="reviewVo" >
+      insert into review
+      values(review_seq.nextval, #{kinder_no}, #{kinder_name}, #{kinder_addr}, #{avg_score1}, #{avg_score2}, #{avg_score3}, #{review_title}, #{review_content}, #{review_writer}, #{review_year}, SYSDATE)
+   </insert>
+   <!-- 1 : kinder_no / 1 : 유치원 주소 -->
+   
+   <!-- **승혜:reviewList 매퍼 수정 -->
+   <select id="reviewList" resultType="reviewVo" >
+     SELECT *
+		FROM (
+		SELECT R.*, 
+		ROW_NUMBER() OVER(ORDER BY REVIEW_NO DESC) AS RNUM
+		FROM REVIEW R
+		) REVIEW
+		WHERE 
+		RNUM BETWEEN #{rowStart} AND #{rowEnd} 
+		ORDER BY REVIEW_NO DESC
+   </select>
+   
+   <insert id="reviewUpdate" parameterType="reviewVo" >
+      update review
+      set review_title=#{review_title}, review_content=#{review_content}
+      where review_no=#{review_no}
+   </insert>
+   
+   <delete id="reviewDelete" parameterType="int">
+      delete from review
+      where review_no=#{review_no}
+   </delete>
+   
+   <select id="reviewselect" parameterType="int" resultType="reviewVo">
+    SELECT * 
+    FROM REVIEW
+    WHERE REVIEW_NO = #{review_no}
+   </select>
+   
+   <select id="kinderSearch" parameterType="String" resultType="kinderVo">
+   	SELECT *
+   	FROM KINDER
+   	WHERE NAME LIKE '%' || #{keyword} || '%' AND (ROWNUM BETWEEN 0 AND 9)
+
+   	
+   </select>
+   
+   <select id="kinderSearch2" parameterType="String" resultType="kinderVo">
+   SELECT *
+   FROM KINDER
+   WHERE NAME = #{kinder_name}
+   </select>
+   
+   <select id="reviewSearch" parameterType="Map" resultType="reviewVo">
+   SELECT *
+   FROM REVIEW
+   WHERE ${type} LIKE '%' || #{keyword} || '%'
+   ORDER BY REVIEW_NO DESC
+   
+   </select>
+   <!-- **승혜 리뷰 개수 카운트 매퍼 추가 -->
+   <select id="reviewCount" resultType="int" parameterType="Criteria">
+   		SELECT COUNT(*) FROM REVIEW
+   </select>
+     
+  </mapper>
+  

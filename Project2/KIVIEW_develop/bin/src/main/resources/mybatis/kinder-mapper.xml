@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kinder">
+
+   <!-- 법정동 -->
+   <resultMap type="ProvinceVo" id="ProvinceMap">
+      <result property="province" column="PROVINCE" />
+      <result property="city" column="CITY" />
+      <result property="town" column="TOWN" />
+   </resultMap>
+
+   <!-- 유치원 -->
+   <resultMap type="KinderVo" id="KinderMap">
+      <result property="kinder_no" column="KINDER_NO"/>
+      <result property="name" column="NAME"/>
+      <result property="type" column="TYPE"/>
+      <result property="addr1" column="ADDR1"/>
+      <result property="addr2" column="ADDR2"/>
+      <result property="latitude" column="LATITUDE"/>
+      <result property="longitude" column="LONGITUDE"/>
+      <result property="phone" column="PHONE"/>
+      <result property="director" column="DIRECTOR"/>
+      <result property="opendate" column="OPENDATE"/>
+      <result property="homepage" column="HOMEPAGE"/>
+      <result property="class_num" column="CLASS_NUM"/>
+      <result property="children_num" column="CHILDREN_NUM"/>
+      <result property="staff_num" column="STAFF_NUM"/>
+      <result property="drive_yn" column="DRIVE_YN"/>
+      <result property="meal_yn" column="MEAL_YN"/>
+      <result property="cctv_yn" column="CCTV_YN"/>
+   </resultMap>
+
+   <!-- 도/시  -->
+   <select id="provinceList" resultMap="ProvinceMap">
+      SELECT DISTINCT PROVINCE
+      FROM PROVINCE ORDER BY PROVINCE
+   </select>
+
+   <!-- 도/시 선택시 시/군/구  -->
+   <select id="cityList" parameterType="String" resultMap="ProvinceMap">
+      SELECT DISTINCT CITY FROM PROVINCE
+      WHERE PROVINCE LIKE '%${province}%'
+      ORDER BY CITY
+   </select>
+
+   <!-- 시/군/구 선택시 읍/면/동  -->
+   <!-- 세종시는 시/군/구가 없으므로 예외처리 -->
+   <select id="townList" parameterType="String" resultMap="ProvinceMap">
+      SELECT DISTINCT TOWN FROM PROVINCE WHERE 1=1
+      <choose>
+         <when test='!city.equals("세종특별자치시") and !city.equals("세종")'>
+            AND CITY LIKE '%${city}%'
+         </when>
+         <otherwise>
+            AND PROVINCE = '세종특별자치시'
+         </otherwise>
+      </choose>
+      ORDER BY TOWN
+   </select>
+
+   <!-- 지역 select box 유치원 검색  -->
+   <select id="kinderList" parameterType="HashMap" resultMap="KinderMap">
+      SELECT *
+      FROM (
+      SELECT K.*,
+      ROW_NUMBER() OVER(ORDER BY NAME) AS RNUM
+      FROM KINDER K
+      WHERE 1=1
+      <choose>
+         <when test="town==null">
+            AND ADDR2 LIKE '%${province}%${city}%'
+         </when>
+         <otherwise>
+            AND ADDR2 LIKE '%${province}%${city}%${town}%'
+         </otherwise>
+      </choose>
+      ) KINDER
+      WHERE
+      RNUM BETWEEN #{rowStart} AND #{rowEnd}
+      ORDER BY NAME
+   </select>
+
+   <!-- 유치원 이름 검색  -->
+   <select id="kinderListName" parameterType="HashMap" resultMap="KinderMap">
+      SELECT *
+      FROM (
+      SELECT K.*,
+      ROW_NUMBER() OVER(ORDER BY NAME) AS RNUM
+      FROM KINDER K
+      WHERE NAME LIKE '%${name}%'
+      ) KINDER
+      WHERE
+      RNUM BETWEEN #{rowStart} AND #{rowEnd}
+      ORDER BY NAME
+   </select>
+
+   <!-- 타입 선택  -->
+   <select id="kinderListType" parameterType="HashMap" resultMap="KinderMap">
+      SELECT * FROM KINDER WHERE 1=1
+      <choose>
+         <when test='town!=null and !town.equals("")'>
+            AND (ADDR2 LIKE '%${province}%${city}%${town}%')
+            <if test='type.equals("public")'>
+               AND (TYPE LIKE '%국립%' OR TYPE LIKE '%공립%')
+            </if>
+            <if test='type.equals("corporate")'>
+               AND TYPE LIKE '%법인%'
+            </if>
+            <if test='type.equals("private")'>
+               AND TYPE LIKE '%사립%'
+            </if>
+         </when>
+         <otherwise>
+            AND (ADDR2 LIKE '%${province}%${city}%')
+            <if test='type.equals("public")'>
+               AND (TYPE LIKE '%국립%' OR TYPE LIKE '%공립%')
+            </if>
+            <if test='type.equals("corporate")'>
+               AND TYPE LIKE '%법인%'
+            </if>
+            <if test='type.equals("private")'>
+               AND TYPE LIKE '%사인%'
+            </if>
+         </otherwise>
+      </choose>
+   </select>
+
+   <!-- 유치원 selectOne  -->
+   <select id="kinderDetail" parameterType="int" resultType="KinderVo">
+      SELECT * FROM KINDER WHERE KINDER_NO = #{kinder_no}
+   </select>
+
+   <!-- 유치원 이름 중복시 1개만 출력  -->
+   <select id="kinderDetail2" parameterType="String" resultType="KinderVo">
+      SELECT * FROM KINDER WHERE NAME LIKE '%${name}%' AND ROWNUM = 1
+   </select>
+
+   <!-- 유치원 메인 검색 자동완성  -->
+   <select id="kinderListKeyword" parameterType="String" resultMap="KinderMap">
+      <![CDATA[ SELECT DISTINCT NAME FROM KINDER WHERE NAME LIKE '%${name}%' AND ROWNUM <= 15 ]]>
+   </select>
+
+   <!-- 유치원 전체 리스트  -->
+   <select id="kinderListAll" resultMap="KinderMap">
+      SELECT * FROM KINDER
+   </select>
+
+   <!-- 유치원 카카오지도에 뿌리기 -->
+   <select id="kinderListMap" parameterType="HashMap" resultMap="KinderMap">
+      SELECT * FROM KINDER WHERE ADDR2 LIKE '%${province}%${citytown}%'
+   </select>
+
+   <!-- 해당 유치원 리뷰리스트  -->
+   <select id="reviewList" parameterType="HashMap" resultType="reviewVo">
+      SELECT *
+      FROM (
+      SELECT R.*,
+      ROW_NUMBER() OVER(ORDER BY KINDER_NO DESC) AS RNUM
+      FROM REVIEW R
+      WHERE KINDER_NO = #{kinder_no}
+      ) REVIEW
+      WHERE
+      RNUM BETWEEN #{rowStart} AND #{rowEnd}
+      ORDER BY REVIEW_NO
+   </select>
+
+   <!-- 해당 유치원 리뷰 카운트 -->
+   <select id="rlistCount" parameterType="int" resultType="int">
+      SELECT COUNT(*) FROM REVIEW WHERE KINDER_NO = #{kinder_no}
+   </select>
+
+   <!-- 지역 검색 유치원 카운트 -->
+   <select id="llistCount" parameterType="ProvinceVo" resultType="int">
+      SELECT COUNT(*) FROM KINDER WHERE 1=1
+      <choose>
+         <when test="town==null">
+            AND ADDR2 LIKE '%${province}%${city}%'
+         </when>
+         <otherwise>
+            AND ADDR2 LIKE '%${province}%${city}%${town}%'
+         </otherwise>
+      </choose>
+   </select>
+
+   <!-- 이름 검색 유치원 카운트 -->
+   <select id="nlistCount" parameterType="String" resultType="int">
+      SELECT COUNT(*) FROM KINDER WHERE NAME LIKE '%${name}%'
+   </select>
+
+   <!-- 베스트 유치원 10개  -->
+   <select id="bestKinderList" resultType="kinderVo">
+      <![CDATA[ SELECT * FROM(
+       SELECT K.*,(SELECT COUNT(*) FROM REVIEW WHERE KINDER_NO = K.KINDER_NO) AS RC
+       FROM KINDER K ORDER BY RC DESC)
+       KINDER WHERE ROWNUM <= 10 ]]>
+   </select>
+
+</mapper>

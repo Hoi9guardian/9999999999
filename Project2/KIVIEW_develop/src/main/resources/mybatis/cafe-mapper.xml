@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="cafe">
+  	
+  	<!-- 카페 CRUD -->
+     <insert id="cafe_insert" parameterType="CafeVo">
+        INSERT INTO CAFE
+        VALUES(CAFE_SEQ.NEXTVAL, #{title},#{admin},#{intro},#{thumb},#{background},#{restriction},#{question})
+     
+     
+     </insert>
+     
+     <!-- 이건 카페CRUD에 두세요. -->
+     <insert id="cafe_insert2" parameterType="CafeMemberVo" >
+        INSERT INTO CAFE_MEMBER
+        VALUES(CAFE_MEMBER_SEQ.NEXTVAL,#{member_no}, CAFE_SEQ.CURRVAL,#{name},#{answer},#{signyn},'N',SYSDATE)
+     </insert>
+     
+     <update id="cafe_update" parameterType="CafeVo">
+     	UPDATE CAFE
+     	SET INTRO=#{intro}, RESTRICTION=#{restriction}, QUESTION=#{question}
+     	WHERE CAFE_NO=#{cafe_no}
+     
+     </update>
+     
+     <select id="cafe_chk" parameterType="String" resultType="CafeVo">
+     	SELECT *
+     	FROM CAFE
+     	WHERE TITLE= #{title}
+     </select>
+     
+     
+     <select id="cafe_Ulist" parameterType="int" resultType="CafeVo">
+        SELECT * 
+        FROM CAFE 
+        WHERE CAFE_NO IN (SELECT CAFE_NO FROM CAFE_MEMBER WHERE MEMBER_NO = #{member_no} AND (SIGNYN = 'Y' OR SIGNYN='A') )
+     </select>
+     
+     <select id="cafe_Alist" parameterType="String" resultType="CafeVo">
+        SELECT * 
+        FROM CAFE 
+        WHERE ADMIN =#{member_id }
+     </select>
+   
+   	<select id="cafe_my" parameterType="Map" resultType="CafeVo">
+        SELECT *
+        FROM (SELECT CF.*,  ROW_NUMBER() OVER (ORDER BY CAFE_NO) AS RNUM 
+        FROM CAFE CF WHERE CAFE_NO IN (SELECT CAFE_NO FROM CAFE_MEMBER WHERE MEMBER_NO = #{member_no} AND (SIGNYN = 'Y' OR SIGNYN='A') ) ) CAFE
+        WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+        
+       
+        
+     
+     </select>
+     
+     <select id="cafe_search" parameterType="String" resultType="CafeVo">
+        SELECT *
+        FROM CAFE        
+        <choose>
+           <when test="_parameter.length!=0">
+               WHERE TITLE like '%'||#{keyword}||'%' 
+           </when>
+           <when test="_parameter.length==0">
+              
+           </when>              
+        </choose>
+        
+     </select>
+     
+     <select id="cafe_search_paging" parameterType="CafePageVo" resultType="CafeVo">
+      SELECT *
+      FROM (     
+        SELECT c.*,
+              ROW_NUMBER() OVER(ORDER BY C.CAFE_NO DESC) AS RNUM
+        FROM CAFE c       
+        <choose>
+           <when test="keyword.length!=0">
+               WHERE TITLE like '%'||#{keyword}||'%' 
+           </when>
+           <when test="keyword.length==0">
+              
+           </when>              
+        </choose>
+        ) 
+        CAFE WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+        
+     </select>
+   	
+
+     <select id="cafe_selectone" parameterType="int" resultType="CafeVo">
+        SELECT *
+        FROM CAFE
+        WHERE CAFE_NO = #{cafe_no}
+     
+     </select>
+     
+     <delete id="cafe_delete" parameterType="int">
+      DELETE FROM CAFE
+      WHERE CAFE_NO = #{cafe_no}
+     
+     </delete>
+     
+     <select id="cafe_admin" parameterType="String" resultType="CafeVo">
+     	SELECT *
+     	FROM CAFE
+     	WHERE ADMIN=#{admin}
+     
+     </select>
+     
+     <select id="cafe_selectAll" resultType="CafeVo">
+     	SELECT *
+     	FROM CAFE
+     	
+     
+     </select>
+     
+     <select id="best_cafe" resultType="CafeVo">
+     	SELECT * 
+		FROM (      
+		SELECT C.*,
+     	(SELECT COUNT(*) FROM CAFE_MEMBER WHERE CAFE_NO = C.CAFE_NO) AS G         
+		FROM CAFE C ORDER BY G DESC)
+		CAFE WHERE ROWNUM BETWEEN 1 AND 3
+     </select>
+
+     
+     <!-- 메뉴 CRUD -->
+     
+     <insert id="menu_insert" parameterType="CafeMenuVo">
+        INSERT INTO CAFE_MENU
+        VALUES(CAFE_MENU_SEQ.NEXTVAL, #{cafe_no}, #{name}, #{authority}, #{concept})
+        
+     
+     </insert>
+     
+     
+     
+     <select id="menu_select" parameterType="int" resultType="CafeMenuVo">
+     	SELECT *
+     	FROM CAFE_MENU
+     	WHERE CAFE_NO = #{cafe_no}
+     
+     </select>
+     
+     <select id="menu_detail1" parameterType="int" resultType="CafeMenuVo">
+     	SELECT * 
+     	FROM CAFE_MENU
+     	WHERE CAFE_MENU_NO = #{no} 
+     </select>
+     
+     <select id="menu_detail2" parameterType="int" resultType="CafeCategoryVo">
+     	SELECT * 
+     	FROM CAFE_Category
+     	WHERE CAFE_MENU_NO = #{no} 
+     </select>
+     
+     <select id="menu_chk" parameterType="CafeMenuVo" resultType="CafeMenuVo">
+     	SELECT *
+     	FROM CAFE_MENU
+     	WHERE CAFE_NO = #{cafe_no} AND NAME = #{name}
+     
+     
+     
+     </select>
+     
+     <select id="menu_delete" parameterType="int">
+     	DELETE FROM
+     	CAFE_MENU
+     	WHERE CAFE_MENU_NO = #{cafe_menu_no}
+     
+     </select>
+     
+     <update id="menu_update" parameterType="CafeMenuVo">
+     	UPDATE CAFE_MENU
+     	SET NAME=#{name}, AUTHORITY=#{authority}
+     	WHERE CAFE_MENU_NO = #{cafe_menu_no}
+     
+     </update>
+     
+     
+     <!-- 카테고리 CRUD -->
+     <insert id="category_insert" parameterType="String">
+        
+        
+        INSERT INTO CAFE_CATEGORY
+        VALUES(CAFE_CATEGORY_SEQ.NEXTVAL, CAFE_MENU_SEQ.CURRVAL, #{cat})
+        
+     
+     </insert>
+     
+     <delete id="category_delete" parameterType="int">
+     	DELETE FROM
+     	CAFE_CATEGORY
+     	WHERE CAFE_CATEGORY_NO = #{category_no}
+     
+     </delete>
+     
+     <select id="category_delete_all" parameterType="int">
+     	SELECT *
+     	FROM CAFE_CATEGORY
+     	WHERE CAFE_MENU_NO = #{cafe_menu_no}
+     </select>
+     
+     <update id="category_update">
+     	UPDATE CAFE_CATEGORY
+     	SET CATEGORY=#{category}
+     	WHERE CAFE_CATEGORY_NO = #{cafe_category_no}
+     </update>
+     
+     <update id="category_update_insert" parameterType="CafeCategoryVo">
+     	INSERT INTO CAFE_CATEGORY
+     	VALUES(CAFE_CATEGORY_SEQ.NEXTVAL, #{cafe_menu_no}, #{category})
+     </update>
+     
+   
+  
+    <!-- 카페 게시판 -->
+      <select id="cafe_board_menu" parameterType="int" resultType="CafeBoardVo">
+        SELECT * FROM CAFE_BOARD WHERE CAFE_MENU_NO IN (SELECT CAFE_CATEGORY_NO FROM CAFE_CATEGORY WHERE CAFE_MENU_NO IN (SELECT CAFE_MENU_NO FROM CAFE_MENU WHERE CAFE_NO = #{cafe_no}))
+     </select>
+     
+     <select id="cafe_board_list" parameterType="int" resultType="CafeBoardVo">
+        SELECT * FROM CAFE_BOARD WHERE CAFE_MENU_NO = #{cafe_menu_no} ORDER BY CAFE_BOARD_NO desc
+     </select>
+     
+     <select id="cafe_board_list_total" parameterType="int" resultType="CafeBoardVo">
+     	SELECT * FROM CAFE_BOARD WHERE CAFE_MENU_NO IN (SELECT CAFE_MENU_NO FROM CAFE_MENU WHERE CAFE_NO = #{cafe_no})
+     
+     </select>
+        
+      <select id="cafe_menu_name" parameterType="int" resultType="String">
+         SELECT NAME FROM CAFE_MENU WHERE CAFE_MENU_NO = #{cafe_menu_no}
+      </select>
+      
+       <insert id="cafe_board_insert" parameterType="CafeBoardVo" >
+        INSERT INTO CAFE_BOARD VALUES(CAFE_BOARD_SEQ.NEXTVAL,#{cafe_menu_no},#{category, jdbcType=VARCHAR},#{title},#{content},#{writer},SYSDATE,0)
+     </insert> 
+     
+     <select id="cafe_board_detail" parameterType="int" resultType="CafeBoardVo">
+        SELECT * FROM CAFE_BOARD WHERE CAFE_BOARD_NO = #{cafe_board_no}
+     </select>
+     
+     <delete id="cafe_board_delete" parameterType="int" >
+        DELETE FROM CAFE_BOARD WHERE CAFE_BOARD_NO = #{cafe_board_no}
+     </delete>
+     
+     <update id="cafe_board_update" parameterType="CafeBoardVo">
+        UPDATE CAFE_BOARD SET CATEGORY=#{category, jdbcType=VARCHAR},TITLE=#{title},CONTENT=#{content} WHERE CAFE_BOARD_NO=#{cafe_board_no}
+     </update>
+     
+      <update id="cafe_board_count" parameterType="int">
+        UPDATE CAFE_BOARD SET HIT=HIT+1 WHERE CAFE_BOARD_NO=#{cafe_board_no}
+     </update>
+     
+      <select id="board_searchlist" parameterType="CafePageVo" resultType="CafeBoardVo">
+         SELECT *
+         FROM (            
+         SELECT CB.*,
+               (SELECT COUNT(*) FROM CAFE_REPLY WHERE CAFE_BOARD_NO = CB.CAFE_BOARD_NO) REPLYCOUNT,
+               ROW_NUMBER() OVER(ORDER BY CAFE_BOARD_NO DESC) AS RNUM
+         FROM CAFE_BOARD CB 
+         WHERE CB.CAFE_MENU_NO = #{cafe_menu_no}
+         <choose>            
+            <when test="searchoption == 'title' ">
+               <if test="keyword != null and keyword !=''">
+                  AND CB.TITLE LIKE '%' || #{keyword} || '%'
+               </if>                  
+            </when>
+            <when test="searchoption == 'content' ">
+               <if test="keyword != null and keyword !=''">
+                  AND CB.CONTENT LIKE '%' || #{keyword} || '%'
+               </if>
+            </when>
+            <when test="searchoption == 'writer' ">
+               <if test="keyword != null and keyword !=''"> 
+                  AND CB.WRITER LIKE #{keyword}
+               </if>
+            </when>
+            <when test="searchoption == 'title+content' ">
+               <if test="keyword != null and keyword !=''">
+                  AND CB.CONTENT LIKE '%' || #{keyword} || '%' 
+                  OR CB.TITLE LIKE '%' || #{keyword} || '%' 
+               </if>
+            </when>               
+         </choose> 
+             
+         
+         ) CAFE_BOARD
+         
+         WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+         
+      </select>
+     
+     <select id="board_searchlistcount" parameterType="Map" resultType="CafeBoardVo">
+        SELECT CB.*,
+               (SELECT COUNT(*) FROM CAFE_REPLY WHERE CAFE_BOARD_NO = CB.CAFE_BOARD_NO) REPLYCOUNT
+        FROM CAFE_BOARD CB
+        WHERE CB.CAFE_MENU_NO = #{cafe_menu_no}
+        <choose>            
+            <when test="searchoption == 'title' ">
+               <if test="keyword != null and keyword !=''">
+                  AND CB.TITLE LIKE '%' || #{keyword} || '%'
+               </if>                  
+            </when>
+            <when test="searchoption == 'content' ">
+               <if test="keyword != null and keyword !=''">
+                  AND CB.CONTENT LIKE '%' || #{keyword} || '%'
+               </if>
+            </when>
+            <when test="searchoption == 'writer' ">
+               <if test="keyword != null and keyword !=''"> 
+                  AND CB.WRITER LIKE #{keyword}
+               </if>
+            </when>
+            <when test="searchoption == 'title+content' ">
+               <if test="keyword != null and keyword !=''">
+                  AND CB.CONTENT LIKE '%' || #{keyword} || '%' 
+                  OR CB.TITLE LIKE '%' || #{keyword} || '%' 
+               </if>
+            </when>               
+         </choose> 
+     
+     </select>    
+
+       <select id="cafe_reply_list_pagevo" parameterType="CafePageVo" resultType="CafeReplyVo">
+         SELECT *
+         FROM(
+            SELECT CR.*,
+            ROW_NUMBER() OVER(ORDER BY CAFE_REPLY ) AS RNUM
+            FROM CAFE_REPLY CR WHERE CAFE_BOARD_NO=#{cafe_board_no} 
+         ) CAFE_REPLY
+         WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}     
+       
+     </select>
+     
+     <select id="cafe_board_list_count" parameterType="int">
+        SELECT COUNT(*)
+        FROM CAFE_BOARD WHERE CAFE_MENU_NO = #{cafe_menu_no}
+     </select>
+     
+     <select id="cafe_board_list_page" parameterType="CafePageVo" resultType="CafeBoardVO">
+     
+        SELECT *
+        FROM (
+        SELECT CB.*,
+        (SELECT COUNT(*) FROM CAFE_REPLY WHERE CAFE_BOARD_NO = CB.CAFE_BOARD_NO) AS REPLYCOUNT,
+        ROW_NUMBER() OVER(ORDER BY CAFE_BOARD_NO DESC) AS RNUM
+        FROM CAFE_BOARD CB WHERE CAFE_MENU_NO = #{cafe_menu_no}
+        ) CAFE_BOARD
+        WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+        
+        </select>
+      
+      
+     
+     
+     
+     
+     
+     <!-- 카페 리플 -->
+     <select id="cafe_reply_list" parameterType="int" resultType="CafeReplyVo">
+        SELECT *
+        FROM CAFE_REPLY WHERE CAFE_BOARD_NO=#{cafe_board_no} 
+        ORDER BY CAFE_REPLY
+     </select>
+     
+      <insert id="reply_insert" parameterType="CafeReplyVo">
+         INSERT INTO CAFE_REPLY 
+         VALUES(CAFE_REPLY_SEQ.NEXTVAL,#{cafe_board_no},#{writer},#{content},SYSDATE)
+      </insert>
+      <delete id="reply_delete" parameterType="int">
+         DELETE FROM CAFE_REPLY WHERE CAFE_REPLY = #{cafe_reply} 
+      </delete>
+      <update id="reply_update" parameterType="CafeReplyVo">      
+         UPDATE CAFE_REPLY SET CONTENT = #{content} WHERE CAFE_REPLY =#{cafe_reply} 
+      </update>
+     
+     <select id="reply_allList" resultType="CafeReplyVo">
+     	SELECT *
+     	FROM CAFE_REPLY
+     	ORDER BY CAFE_REPLY
+     	
+     
+     </select>
+     
+     
+     
+     
+     
+      
+      
+      <!-- 카페 회원 CRUD-->
+      <select id="member_selectAll" resultType="CafeMemberVo">
+     	SELECT *
+     	FROM CAFE_MEMBER
+     </select>
+     
+      
+      
+      <select id="member_list" parameterType="int" resultType="CafeMemberVo"> 
+     	SELECT *
+     	FROM CAFE_MEMBER
+     	WHERE CAFE_NO = #{cafe_no}
+
+     </select>
+     
+     <update id="member_block" parameterType="int">
+     	UPDATE CAFE_MEMBER
+     	SET BLOCKYN = 'Y'
+     	WHERE CAFE_MEMBER_NO=#{cafe_member_no}
+     
+     </update>
+     
+     <update id="member_unblock" parameterType="int">
+     	UPDATE CAFE_MEMBER
+     	SET BLOCKYN = 'N'
+     	WHERE CAFE_MEMBER_NO=#{cafe_member_no}
+     
+     </update>
+     
+     <update id="member_sign" parameterType="int">
+     	UPDATE CAFE_MEMBER
+     	SET SIGNYN = 'Y', SIGNDATE = SYSDATE
+     	WHERE CAFE_MEMBER_NO=#{cafe_member_no}
+     
+     </update>
+     
+     <delete id="member_delete" parameterType="int">
+     	DELETE FROM CAFE_MEMBER
+     	WHERE CAFE_MEMBER_NO=#{cafe_member_no}
+     
+     </delete>
+     
+      <insert id="cafejoin" parameterType="CafeMemberVo" >
+        INSERT INTO CAFE_MEMBER
+        VALUES(CAFE_MEMBER_SEQ.NEXTVAL,#{member_no},#{cafe_no},#{name},#{answer},#{signyn},'N',SYSDATE) 
+     </insert>
+     
+     <select id="cafe_regyn" parameterType="CafeMemberVo" resultType="CafeMemberVo">
+        SELECT *
+        FROM CAFE_MEMBER WHERE CAFE_NO = #{cafe_no} AND MEMBER_NO = #{member_no} AND SIGNYN = 'Y'
+     </select>
+     
+     
+     <!-- 카페 채팅 -->
+     <select id="cafe_chat_select" parameterType="Map" resultType="CafeChatVo">
+     	
+  		
+  		SELECT *
+        FROM(
+            SELECT CR.*,
+            ROW_NUMBER() OVER(ORDER BY CAFE_CHAT_NO DESC) AS RNUM
+            FROM CAFE_CHAT CR WHERE CAFE_NO=#{cafe_no} AND MEMBER_NO=#{member_no}
+         ) CAFE_CHAT
+         WHERE RNUM BETWEEN #{start} AND #{last}
+     </select>
+     
+     <insert id="cafe_chat_insert" parameterType="CafeChatVo">
+     	INSERT INTO CAFE_CHAT
+     	VALUES(CAFE_CHAT_SEQ.NEXTVAL, #{cafe_no}, #{member_no}, #{writer}, #{msg}, SYSDATE)
+     
+     </insert>
+  
+  </mapper>
+  

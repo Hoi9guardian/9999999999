@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notice">
+	<!-- notice list -->
+	<select id="noticeList" resultType="NoticeVo" parameterType="Criteria" >
+		SELECT *
+		FROM (
+		SELECT N.*, 
+		ROW_NUMBER() OVER(ORDER BY NOTICE_NO DESC) AS RNUM
+		FROM NOTICE N
+		<include refid="searchCondition"/>
+		) NOTICE
+		WHERE 
+		RNUM BETWEEN #{rowStart} AND #{rowEnd} 
+		ORDER BY <include refid="sortlist"/>
+	</select>	
+	<!-- FAQ list -->
+	<select id="faqlist" resultType="FAQVo" parameterType="Criteria">
+		SELECT *
+		FROM (
+		SELECT F.*, 
+		ROW_NUMBER() OVER(ORDER BY FAQ_NO DESC) AS RNUM
+		FROM FAQ F
+		<include refid="catdlist"/>
+		) F
+		WHERE 
+		RNUM BETWEEN #{rowStart} AND #{rowEnd} 
+		ORDER BY FAQ_NO DESC
+	</select>
+	
+	<!-- 검색 조건 query -->
+	<sql id = "searchCondition">
+		<if test = "keyword != null and keyword != ''">	
+			<if test="searchType == 'all'.toString()">
+				WHERE (NOTICE_TITLE LIKE '%' || #{keyword} || '%')
+				OR (NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%')
+				OR (NOTICE_WRITER LIKE '%' || #{keyword} || '%')
+			</if>
+			<if test = "searchType == 't'.toString()">
+				WHERE NOTICE_TITLE LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'con'.toString()">
+				WHERE NOTICE_CONTENT LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test = "searchType == 'tc'.toString()">
+				WHERE (NOTICE_TITLE LIKE '%' || #{keyword} || '%')
+				OR (NOTICE_CONTENT LIKE '%' || #{keyword} || '%')
+			</if>
+			<if test = "searchType == 'cw'.toString()">
+				WHERE (NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%')
+				OR (NOTICE_WRITER LIKE '%' || #{keyword} || '%')
+			</if>
+		</if>
+		<!-- notice 카테고리 -->
+		<if test = "cat_detail != null and cat_detail != ''">
+			<if test = "cat_detail == '공지사항'.toString()">
+				WHERE CAT_DETAIL = #{cat_detail}
+			</if>
+			<if test = "cat_detail == '키뷰소식'.toString()">
+				WHERE CAT_DETAIL = #{cat_detail}
+			</if>
+		</if>
+	</sql>
+	
+	<!-- FAQ 카테고리 query -->
+	<sql id="catdlist">
+		<if test = "faqcatd != null and faqcatd != ''">
+			<if test="faqcatd == '리뷰'.toString()">
+				WHERE FAQ_CATD = #{faqcatd}
+			</if>
+			<if test="faqcatd == '회원'.toString()">
+				WHERE FAQ_CATD = #{faqcatd} 
+			</if>
+			<if test="faqcatd == '서비스'.toString()">
+				WHERE FAQ_CATD = #{faqcatd}
+			</if>
+		</if>
+	</sql>
+	
+	<!-- 정렬 기준 query -->
+	<sql id="sortlist">
+		<if test="sort == null or sort == ''">
+			NOTICE_NO DESC, NOTICE_DATE DESC		
+		</if>
+		<if test = "sort != null and sort != ''">
+			<if test="sort == 'new'.toString()">
+				NOTICE_NO DESC
+			</if>
+			<if test="sort == 'view'.toString()">
+				NOTICE_HIT DESC
+			</if>
+		</if>
+	</sql>
+	
+	<!-- notice list 게시글 카운팅 -->
+	<select id="listCount" resultType="int" parameterType="Criteria">
+		SELECT COUNT(*) FROM 
+		NOTICE <include refid="searchCondition"/>
+	</select>
+	<!-- FAQ 게시글 카운팅 -->
+	<select id="faqCount" resultType="int" parameterType="Criteria">
+		SELECT COUNT(*) FROM
+		FAQ <include refid="catdlist"/>
+	</select>
+	<!-- notice selectOne  -->
+	<select id="noticeDetail" parameterType="int" resultType="noticeVo">
+		SELECT * FROM NOTICE
+		WHERE NOTICE_NO = #{notice_no}
+	</select>
+	<!-- FAQ 답글 selectOne -->
+	<select id="faqDetail" parameterType="int" resultType="FAQVo">
+		SELECT FAQ_CONTENT FROM FAQ
+		WHERE FAQ_NO = #{faq_no}
+	</select>
+	<select id="faqUpdateOne" parameterType="int" resultType="FAQVo">
+		SELECT * FROM FAQ
+		WHERE FAQ_NO = #{faq_no}
+	</select>
+	<insert id="noticeInsert" parameterType="NoticeVo">
+		INSERT INTO NOTICE VALUES
+		(NOTICE_SEQ.NEXTVAL, #{cat_detail}, #{notice_title}, #{notice_content}, #{notice_writer},
+		TO_DATE(SYSDATE,'YY/MM/DD'), 0)
+	</insert>
+	<insert id="faqInsert" parameterType="FAQVo">
+		INSERT INTO FAQ VALUES
+		(FAQ_SEQ.NEXTVAL, #{faq_catd}, #{faq_title}, #{faq_content})
+	</insert>
+	<update id="noticeUpdate" parameterType="NoticeVo">
+		UPDATE NOTICE SET CAT_DETAIL = #{cat_detail}, NOTICE_TITLE =
+		#{notice_title},
+		NOTICE_CONTENT = #{notice_content} WHERE NOTICE_NO = #{notice_no}
+	</update>
+	<update id="faqUpdate" parameterType="FAQVo">
+		UPDATE FAQ SET FAQ_CATD = #{faq_catd}, FAQ_TITLE = #{faq_title}, FAQ_CONTENT = #{faq_content}
+		WHERE FAQ_NO = #{faq_no}
+	</update>
+	<delete id="noticeDelete" parameterType="int">
+		DELETE FROM NOTICE WHERE NOTICE_NO = #{notice_no}
+	</delete>
+    <delete id="faqDelete" parameterType="int">
+		DELETE FROM FAQ WHERE FAQ_NO = #{faq_no}
+	</delete>
+	<!-- 조회수 update  -->
+	<update id="hitupdate" parameterType="int">
+		UPDATE NOTICE SET NOTICE_HIT = NOTICE_HIT+1 WHERE NOTICE_NO = #{notice_no}
+	</update>
+	<!-- 조회수 minus update -->
+	<update id="hitupdateminus" parameterType="int">
+		UPDATE NOTICE SET NOTICE_HIT = NOTICE_HIT-2 WHERE NOTICE_NO = #{notice_no}
+	</update>
+
+</mapper>

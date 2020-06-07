@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:mybatis/db.properties</value>
+			</list>
+		</property>	
+	</bean>
+	<!-- datasource -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driver}"></property>
+		<property name="url" value="${url}"></property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property>
+	</bean>
+	
+	<!-- mybatis // sqlsseion factotry bean -->
+		<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+			<property name="dataSource" ref="dataSource"></property>
+			<property name="configLocation" value="WEB-INF/spring/sqls/config.xml"></property>
+		</bean>
+		
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSession"></constructor-arg>
+	</bean>
+	
+	<!-- transaction -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	
+	</bean>
+	
+	<!-- 멀티파트Resolver : 파일업로드 -->
+   <bean id="multipartResolver" 
+      class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+      <property name="maxUploadSize" value="100000000" ></property>    
+      <property name="defaultEncoding" value="UTF-8"></property>
+   </bean>
+
+	<!-- **승혜 : google login bean -->
+	<bean id="googleConnectionFactory"
+		class="org.springframework.social.google.connect.GoogleConnectionFactory">
+		<constructor-arg
+			value="644232368968-lv79oheut1g7j0d26geqtvel3valll70.apps.googleusercontent.com" />
+		<constructor-arg value="OIWrELK_4w3_Xkx_desWJUbC" />
+	</bean>
+
+	<!-- 승인된 자바스크립트 원본과 승인된 리디렉션 URI -->
+	<bean id="googleOAuth2Parameters"
+		class="org.springframework.social.oauth2.OAuth2Parameters">
+		<property name="scope"
+			value="https://www.googleapis.com/auth/plus.login" />
+		<property name="redirectUri"
+			value="http://localhost:8787/kiview/callback2.do" />
+	</bean>
+
+
+	<!-- **승혜: 네이버 로그인 -->
+	<bean id="naverLoginBO"
+		class="com.mvc.kiview.model.vo.NaverLoginBO" />
+	<!-- **승혜: 카카오 로그인 -->
+	<bean id="kakaoApi" class="com.mvc.kiview.model.vo.KakaoApi" />
+   
+   
+		
+</beans>

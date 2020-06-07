@@ -1,0 +1,477 @@
+@charset "UTF-8";
+
+html, body, #__next {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+	display:none;
+} 
+
+* {
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    text-rendering: optimizeSpeed;
+    -webkit-font-smoothing: antialiased;
+}
+body {
+    display: block;
+    margin: 0px;
+}
+.join-page.jsx-253692965 {
+    background-color: #fff;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    min-width: 1200px;
+}
+.join-title.jsx-669562709 {
+    text-align: center;
+    padding-top: 84px;
+}
+a, a:hover, a:active, a:visited, a:focus {
+    text-decoration: none;
+}
+a {
+    color: #212121;
+}
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.join-title-wrap.jsx-669562709>a.jsx-669562709 img.jsx-669562709 {
+    width: 90px;
+    vertical-align: top;
+}
+img {
+    border-style: none;
+}
+h2.jsx-669562709 {
+    font-size: 40px;
+    font-weight: normal;
+}
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+h2.jsx-669562709 span.jsx-669562709:nth-of-type(1) {
+    font-weight: 700;
+    color: #FFDC00;
+    margin-right: 8px;
+}
+h2.jsx-669562709 {
+    font-size: 40px;
+    font-weight: normal;
+}
+h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.mobile-service.jsx-669562709 {
+    display: none;
+}
+.sub-title.jsx-3372927190 {
+    font-size: 20px;
+    color: rgb(102, 102, 102);
+    text-align: center;
+    margin-top: 8px;
+}
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+form.jsx-3372927190 {
+    width: 600px;
+    background-color: rgb(255, 255, 255);
+    margin: 40px auto 0px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(236, 236, 236);
+    border-image: initial;
+    padding: 40px;
+}
+form {
+    display: block;
+    margin-top: 0em;
+}
+.label-box.jsx-3372927190 {
+    margin-bottom: 32px;
+}
+label {
+    cursor: default;
+}
+label.jsx-3712571264 > span.jsx-3712571264 {
+    font-size: 14px;
+    font-weight: bold;
+}
+.input-flex.jsx-3372927190 {
+    display: flex;
+    margin-bottom: 16px;
+}
+.input.jsx-639067573 {
+    position: relative;
+    width: 100%;
+}
+input.jsx-639067573 {
+    box-sizing: border-box;
+	outline: none;
+	font-family: 'Noto Sans KR', sans-serif;
+	text-rendering: optimizeSpeed;
+	-webkit-font-smoothing: antialiased;
+	margin: 0;
+	padding: 0;
+	vertical-align: baseline;
+	border: 0;
+	border-radius: 0;
+	display: block;
+	font-size: 16px;
+	width: 100%;
+	height: 52px;
+	color: rgb(223, 223, 223);
+	border-bottom: 1px solid rgb(223, 223, 223);
+	
+}
+input {
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: -internal-light-dark-color(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-appearance: textfield;
+    background-color: -internal-light-dark-color(white, black);
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    padding: 1px 0px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+
+button {
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+button {
+    -webkit-appearance: button;
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: buttontext;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    background-color: buttonface;
+    box-sizing: border-box;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    padding: 1px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonface;
+    border-image: initial;
+}
+.label-box.jsx-3372927190 {
+    margin-bottom: 32px;
+}
+label.jsx-3712571264 > span.jsx-3712571264 {
+    font-size: 14px;
+    font-weight: bold;
+}
+.first-password.jsx-3372927190 {
+    margin-bottom: 16px;
+}
+.first-password.jsx-3372927190 {
+    margin-bottom: 16px;
+}
+input.jsx-639067573 {
+    box-sizing: border-box;
+	outline: none;
+	font-family: 'Noto Sans KR', sans-serif;
+	text-rendering: optimizeSpeed;
+	-webkit-font-smoothing: antialiased;
+	margin: 0;
+	padding: 0;
+	vertical-align: baseline;
+	border: 0;
+	border-radius: 0;
+	display: block;
+	font-size: 16px;
+	width: 100%;
+	height: 52px;
+	color: rgb(33, 33, 33);
+	border-bottom: 1px solid rgb(223, 223, 223);
+}
+input, textarea {
+    border: 0;
+    border-radius: 0;
+}
+input[type="password" i] {
+    -webkit-text-security: disc !important;
+}
+input {
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: -internal-light-dark-color(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-appearance: textfield;
+    background-color: -internal-light-dark-color(white, black);
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    padding: 1px 0px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+.input.jsx-639067573 {
+    position: relative;
+    width: 100%;
+}
+.label-box.jsx-3372927190 {
+    margin-bottom: 32px;
+}
+button.jsx-771227029 {
+    
+    outline: none;
+	-webkit-font-smoothing: antialiased;
+	background: none;
+	-webkit-appearance: button;
+	-webkit-writing-mode: horizontal-tb !important;
+	text-rendering: auto;
+	letter-spacing: normal;
+	word-spacing: normal;
+	text-transform: none;
+	text-indent: 0px;
+	text-shadow: none;
+	display: inline-block;
+	text-align: center;
+	align-items: flex-start;
+	cursor: default;
+	box-sizing: border-box;
+	margin: 0em;
+	font: 400 13.3333px Arial;
+	transform-origin: 0px 0px;
+	font-size: 16px;
+	width: 160px;
+	min-width: 160px;
+	height: 52px;
+	line-height: 50px;
+	background-color: #9BDAF2;
+	color: rgb(255, 255, 255);
+	padding: 0px;
+	border-radius: 26px;
+	border-width: initial;
+	border-style: none;
+	border-color: initial;
+	border-image: initial;
+	transition: background-color 0.3s ease 0s;
+	cursor: pointer;
+	
+}
+.select.jsx-4251185715 {
+    position: relative;
+    color: rgb(102, 102, 102);
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+    overflow: visible;
+}
+.choice.jsx-4251185715 {
+    width: 100%;
+    min-width: 137px;
+    position: relative;
+    display: inline-block;
+    padding-right: 45px;
+    font-size: 16px;
+    height: 52px;
+    line-height: 52px;
+    text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    border-bottom: 1px solid rgb(223, 223, 223);
+    overflow: hidden;
+}
+svg[Attributes Style] {
+    width: 28;
+    height: 28;
+    fill: none;
+    stroke: rgb(143, 143, 143);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+:not(svg) {
+    transform-origin: 0px 0px;
+}
+.select--none.jsx-4251185715 .choice.jsx-4251185715 {
+    color: rgb(33, 33, 33);
+}
+.btn-select.jsx-3372927190 > ul {
+    padding: 0px;
+}
+ul.jsx-3281963719 {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 16px 0px 8px;
+}
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+.btn-select.jsx-3372927190 > ul li:first-child {
+    margin-right: -1px;
+}
+.btn-select.jsx-3372927190 > ul li {
+    z-index: 8;
+    width: 100px;
+    height: 52px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 16px;
+    margin: 0px;
+    border-radius: 0px;
+}
+li.jsx-3281963719 {
+    font-size: 14px;
+    height: 42px;
+    line-height: 40px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(223, 223, 223);
+    border-image: initial;
+    border-radius: 4px;
+    padding: 0px 24px;
+    margin: 0px 8px 12px 0px;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+.banner.jsx-2358275923 {
+    position: relative;
+    width: 600px;
+    min-height: 120px;
+    text-align: center;
+    background-image: url(https://d1ta1myjmiqbpz.cloudfront.net/static/images/join_login/banner01.png?f=webp);
+    background-size: cover;
+    margin: 16px auto 0px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    overflow: hidden;
+}
+.alt-text {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    margin: -1px;
+    width: 1px;
+    height: 1px;
+}
+.btn-box.jsx-3372927190 {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin-top: 32px;
+}
+.btn-prev.jsx-3372927190, .btn-finish.jsx-3372927190 {
+    margin: 0px 8px;
+}
+button.jsx-462732305 {
+    font-size: 16px;
+    width: 160px;
+    min-width: 160px;
+    height: 52px;
+    line-height: 50px;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(33, 33, 33);
+    padding: 0px;
+    border-radius: 26px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(223, 223, 223);
+    border-image: initial;
+    transition: background-color 0.3s ease 0s;
+    cursor: pointer;
+}
+button.jsx-1380763286 {
+    font-size: 16px;
+    width: 160px;
+    min-width: 160px;
+    height: 52px;
+    line-height: 50px;
+    background-color: #9BDAF2;
+    color: rgb(255, 255, 255);
+    padding: 0px;
+    border-radius: 26px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    transition: background-color 0.3s ease 0s;
+    cursor: pointer;
+}
+address.jsx-253692965 {
+    font-size: 14px;
+    text-align: center;
+    color: #c1c1c1;
+    font-style: normal;
+    padding: 56px 0;
+}
+.reviews.jsx-2567582721, #topmost.jsx-2567582721 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    z-index: 999999;
+}
+

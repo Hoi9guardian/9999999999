@@ -1,0 +1,287 @@
+@charset "UTF-8";
+
+/* The Modal (background) */
+.modal2 {
+   display: none; /* Hidden by default */
+   position: fixed; /* Stay in place */
+   z-index: 1; /* Sit on top */
+   left: 0;
+   top: 0;
+   width: 100%; /* Full width */
+   height: 100%; /* Full height */
+   background-color: rgb(0, 0, 0); /* Fallback color */
+   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content2 {
+   background-color: #fefefe;
+   margin: 15% auto; /* 15% from the top and centered */
+   margin-top: 10%;
+   padding: 20px;
+   height: 70%;
+   border: 1px solid #888;
+   width: 40%; /* Could be more or less, depending on screen size */
+   overflow-y: auto; /* Enable scroll if needed */
+   overflow-x: hidden;
+}
+
+.modal {
+   display: none; /* Hidden by default */
+   position: fixed; /* Stay in place */
+   z-index: 1; /* Sit on top */
+   left: 0;
+   top: 0;
+   width: 100%; /* Full width */
+   height: 100%; /* Full height */
+   background-color: rgb(0, 0, 0); /* Fallback color */
+   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+   background-color: #fefefe;
+   margin: 15% auto; /* 15% from the top and centered */
+   margin-top: 10%;
+   padding: 20px;
+   height: 70%;
+   border: 1px solid #888;
+   width: 40%; /* Could be more or less, depending on screen size */
+   overflow-y: auto; /* Enable scroll if needed */
+   overflow-x: hidden;
+}
+/* The Close Button */
+.close {
+   color: #aaa;
+   float: right;
+   font-size: 28px;
+   font-weight: bold;
+   position: relative;
+   left: 100%;
+}
+
+.close:hover, .close:focus {
+   color: black;
+   text-decoration: none;
+   cursor: pointer;
+}
+
+label {
+   font-weight: bold;
+   color: black;
+   margin-bottom: 5px;
+}
+
+input[type=text] {
+   border-top: 0px;
+   border-left: 0px;
+   border-right: 0px;
+   outline: none;
+}
+
+select {
+   border: 1px solid lightgray;
+   border-top: 0px;
+   border-left: 0px;
+   border-right: 0px;
+}
+
+form select {
+   border: 1px solid lightgray;
+   border-top: 0px;
+   border-left: 0px;
+   border-right: 0px;
+   height: 40px;
+   width: 120px;
+}
+
+.reviewBtn input {
+   position: relative;
+   left: 80%
+}
+/* 승혜 블러효과랑 로그인 화면, 좋아요 버튼, 별 모양 css추가 */
+.access-not.jsx-3279357537 {
+    position: relative;
+    margin-top: 16px;
+}
+img {
+    border-style: none;
+}
+.auth-popup.jsx-3279357537 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.content.jsx-2941005022 {
+    width: 400px;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 10px;
+    border-radius: 8px;
+    padding: 24px;
+}
+h5.jsx-2941005022 {
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+.btn-box.jsx-2941005022 {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.btn-join.jsx-2941005022, .btn-login.jsx-2941005022 {
+    margin: 0px 8px;
+}
+button.jsx-2939968563 {
+    font-size: 14px;
+    width: 120px;
+    min-width: 120px;
+    height: 42px;
+    line-height: 40px;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(33, 33, 33);
+    padding: 0px;
+    border-radius: 26px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(223, 223, 223);
+    border-image: initial;
+    transition: background-color 0.3s ease 0s;
+}
+button.jsx-749773549 {
+    font-size: 14px;
+    width: 120px;
+    min-width: 120px;
+    height: 42px;
+    line-height: 40px;
+    outline: none;
+    background-color: rgb(255, 157, 31);
+    color: rgb(255, 255, 255);
+    padding: 0px;
+    border-radius: 26px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    transition: background-color 0.3s ease 0s;
+}
+.buttons.jsx-3279357537 {
+    float: right;
+    position: relative;
+    bottom: 40px;
+    outline: none;
+}
+.buttons.jsx-3279357537 .button--voteup {
+    margin-left: 8px;
+}
+.buttons.jsx-3279357537 button {
+    float: left;
+}
+button.jsx-693606843 {
+    display: block;
+    height: 42px;
+    font-size: 14px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(223, 223, 223);
+    border-image: initial;
+    border-radius: 21px;
+    padding: 0px 20px;
+    outline: none;
+}
+svg[Attributes Style] {
+    width: 20;
+    height: 20;
+    fill: none;
+    stroke: rgb(143, 143, 143);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+svg:not(:root) {
+    overflow: hidden;
+}
+.count.jsx-693606843 {
+    color: rgb(63, 96, 204);
+    margin-left: 8px;
+}
+.pagination.jsx-2419612476 {
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    text-rendering: optimizeSpeed;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    color: #212121;
+    vertical-align: baseline;
+    list-style: none;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 36px;
+    margin-top: 32px;
+    top: 20px;
+    left: 3%;
+}
+.pagination.jsx-2419612476 li.jsx-2419612476 {
+    list-style: none;
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    text-rendering: optimizeSpeed;
+    -webkit-font-smoothing: antialiased;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin: auto 14px;
+    font-size: 14px;
+    color: #666666;
+    cursor: pointer;
+}
+a.on {
+    color: rgb(231, 108, 7);
+}
+a.off{
+	color: black;
+}
+.star-2.jsx-2162317864 {
+    background-image: url(https://d1ta1myjmiqbpz.cloudfront.net/static/images/teacher_page/icon_page_star01_on.png);
+}
+.star.jsx-2162317864 {
+    float: left;
+    width: 22px;
+    height: 22px;
+    overflow: hidden;
+    margin-right: 4px;
+    background-size: cover;
+}
+.stars.jsx-3279357537 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 8px;
+}
+#reviewedit, #reviewdel{
+	position:relative;
+	bottom: 40px;
+}

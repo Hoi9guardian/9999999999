@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="like">
+
+
+     <insert id="insertlike" parameterType="LikeVo">
+        INSERT INTO LIKETABLE(LIKE_NO, REVIEW_NO, MEMBER_NO)
+        VALUES (LIKE_SEQ.NEXTVAL,#{review_no}, #{member_no})
+     </insert>
+
+
+     <delete id="deletelike" parameterType="likeVo">
+        DELETE FROM LIKETABLE
+        WHERE MEMBER_NO = #{member_no} AND REVIEW_NO = #{review_no}
+     </delete>
+
+     <select id="selectLikeCount" parameterType="likeVo" resultType="int">
+        SELECT
+           COUNT(*) CNT
+        FROM
+           LIKETABLE
+        WHERE
+           REVIEW_NO = #{review_no}
+           <if test="member_no != null and member_no != ''">
+           AND MEMBER_NO = #{member_no}
+           </if>
+     </select>
+
+
+
+
+     <insert id="insertfavorite" parameterType="FavoriteVo">
+
+        INSERT INTO FAVORITE (FAVORITE_NO, KINDER_NO, MEMBER_NO)
+        VALUES (FAVORITE_SEQ.NEXTVAL, #{kinder_no}, #{member_no})
+
+     </insert>
+
+
+     <delete id="deletefavorite" parameterType="FavoriteVo">
+
+        DELETE FROM FAVORITE
+         WHERE
+            KINDER_NO = #{kinder_no}
+            AND MEMBER_NO = #{member_no}
+     </delete>
+
+
+
+     <select id="selectAll" resultType="LikeVo">
+        SELECT * FROM LIKETABLE
+     </select>
+ 
+     <select id="selectMy" parameterType="int" resultType="LikeVo">
+        SELECT *
+        FROM LIKETABLE
+        WHERE MEMBER_NO = ${member_no}
+
+     </select>
+
+     <select id="myReview" parameterType="String" resultType="ReviewVo">
+        SELECT *
+        FROM REVIEW
+      WHERE REVIEW_WRITER = #{member_id}
+     </select>
+
+     <select id="myBoard" parameterType="String" resultType="CafeBoardVo">
+     	SELECT *
+      	FROM (
+      		SELECT CB.*,
+          	ROW_NUMBER() OVER(ORDER BY CB.CAFE_BOARD_NO DESC) AS RNUM
+     		FROM CAFE_BOARD CB WHERE CB.CAFE_MENU_NO IN (SELECT CM.CAFE_MENU_NO FROM CAFE_MENU CM WHERE CONCEPT='table') AND CB.WRITER =#{member_id}
+     		) CAFE_BOARD
+     </select>
+
+     <select id="myBoard_paging" parameterType="Map" resultType="CafeBoardVo">
+
+
+     	SELECT *
+      	FROM (
+      		SELECT CB.*,
+          	ROW_NUMBER() OVER(ORDER BY CB.CAFE_BOARD_NO DESC) AS RNUM
+     		FROM CAFE_BOARD CB WHERE CB.CAFE_MENU_NO IN (SELECT CM.CAFE_MENU_NO FROM CAFE_MENU CM WHERE CONCEPT='table') AND CB.WRITER =#{member_id}
+     		) CAFE_BOARD
+     	WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+
+
+     </select>
+
+     <select id="myMenu" resultType="CafeMenuVo">
+         SELECT *
+         FROM CAFE_MENU
+     </select>
+
+     <select id="selectFavorite" parameterType="String" resultType="FavoriteVo">
+     	SELECT *
+     	FROM FAVORITE
+     	WHERE MEMBER_NO = #{member_no} AND KINDER_NO = #{kinder_no}
+     </select>
+
+     <select id="myFavorite" parameterType="String" resultType="KinderVo">
+        SELECT K.*
+        FROM FAVORITE F, KINDER K, MEMBER M
+        WHERE F.KINDER_NO = K.KINDER_NO
+        AND F.MEMBER_NO = M.MEMBER_NO
+        AND M.MEMBER_ID = #{member_id}
+     </select>
+
+     <select id="myFavorite_paging" parameterType="Map" resultType="KinderVo">
+     	SELECT *
+     	FROM
+     	(
+     	SELECT K.*, ROW_NUMBER() OVER (ORDER BY F.FAVORITE_NO DESC) AS RNUM
+     	FROM FAVORITE F, KINDER K, MEMBER M
+     	WHERE F.KINDER_NO = K.KINDER_NO
+     	AND F.MEMBER_NO = M.MEMBER_NO
+     	AND M.MEMBER_ID = #{member_id}
+     	)
+
+     	WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+     </select>
+
+	<select id="mainReview" parameterType="String" resultType="ReviewVo">
+		SELECT * FROM REVIEW 
+		WHERE ROWNUM BETWEEN 1 AND 5
+	</select>
+
+
+
+  </mapper>

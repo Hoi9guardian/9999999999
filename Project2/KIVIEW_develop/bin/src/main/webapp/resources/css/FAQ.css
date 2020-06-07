@@ -1,0 +1,289 @@
+@charset "UTF-8";
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.content.jsx-903324597 {
+    position: relative;
+    -webkit-flex: auto;
+    -ms-flex: auto;
+    flex: auto;
+    width: 100%;
+    max-width: 1240px;
+    min-height: 532px;
+    padding: 0 20px;
+    margin: 32px auto 64px;
+}
+.board-box.jsx-3810764099 {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+.sidebar.jsx-1103591975 {
+    background-color: #ffffff;
+    border: 1px solid #dfdfdf;
+    height: 100%;
+    min-width: 260px;
+    padding: 32px 24px 8px;
+    margin-right: 16px;
+}
+h2.jsx-1103591975 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+svg[Attributes Style] {
+    width: 32;
+    height: 32;
+    fill: none;
+    stroke: rgb(223, 223, 223);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+path[Attributes Style] {
+    d: path("M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z");
+}
+h2.jsx-1103591975 span.jsx-1103591975 {
+    margin-left: 8px;
+    color: #666666;
+}
+li.jsx-1103591975 {
+    border-bottom: 1px solid #ececec;
+}
+li.jsx-1103591975:last-child {
+    border-bottom: 0;
+}
+.sidebar--kindergarten.jsx-1103591975 li.active.jsx-1103591975 a.jsx-1103591975 {
+    color: #ff9d1f;
+}
+a, a:hover, a:active, a:visited, a:focus {
+    text-decoration: none;
+}
+.faq-box.jsx-2342570284 {
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(223, 223, 223);
+    border-image: initial;
+}
+.faq-tab.jsx-2342570284 {
+    box-sizing: border-box;
+	outline: none;
+	font-family: 'Noto Sans KR', sans-serif;
+	text-rendering: optimizeSpeed;
+	-webkit-font-smoothing: antialiased;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	color: #212121;
+	vertical-align: baseline;
+	list-style: none;
+	display: flex;
+}
+.faq-tab.jsx-2342570284 li.jsx-2342570284 {
+    flex-basis: 25%;
+}
+.faq-box--kindergarten.jsx-2342570284 .faq-tab.jsx-2342570284 li.jsx-2342570284 button.active.jsx-2342570284 {
+    color: #ff9d1f;
+}
+.faq-tab.jsx-2342570284 li.jsx-2342570284 button.active.jsx-2342570284{
+	background-color: #ffffff;
+    font-weight: 700;
+}
+button {
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+.faq-tab.jsx-2342570284 li.jsx-2342570284 button.jsx-2342570284 {
+	outline:none;
+    display: block;
+    width: 100%;
+    color: rgb(102, 102, 102);
+    height: 62px;
+    background-color: rgb(238, 239, 244);
+}
+.faq-item-box.jsx-2342570284 {
+    padding: 32px 40px 40px;
+}
+.faq-item-box.jsx-2342570284 h3.jsx-2342570284 {
+    font-size: 24px;
+    margin-bottom: 16px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+ol.jsx-1271347565 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    font-weight: normal;
+}
+li.jsx-1271347565, li.jsx-1271347565 a.jsx-1271347565 {
+    font-size: 12px;
+    color: #666666;
+}
+li.jsx-1271347565:after {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-top: 0;
+    border-left: 0;
+    border-bottom: 1px solid #666666;
+    border-right: 1px solid #666666;
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    vertical-align: 2px;
+    margin: 0 8px 0 6px;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+li.jsx-357641531 button.jsx-357641531 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    height: 52px;
+    padding: 0px 16px;
+    border-bottom: 1px solid rgb(236, 236, 236);
+}
+.question-icon.jsx-357641531 {
+    width: 24px;
+    height: 24px;
+    background-color: rgb(255, 157, 31);
+    font-size: 14px;
+    color: #fff;
+    font-weight: 200;
+    text-align: center;
+    border-radius: 50%;
+}
+
+#editbtn{
+	outline:none;
+	position:relative;
+	left:86%;
+	border-radius: 48%;
+	background-color:#ff9d1f;
+	color:#ffffff;
+	width: 6%;
+	
+}
+#deletebtn{
+	outline:none;
+	position:relative;
+	left:87%;
+	border-radius: 48%;
+	background-color:#ff9d1f;
+	color:#ffffff;
+	width: 6%;
+}
+
+
+.tab-name.jsx-357641531 {
+    font-size: 15px;
+    color: rgb(102, 102, 102);
+    margin: 0px 16px;
+}
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+.arrow.jsx-357641531 {
+    margin-left: auto;
+    border-top: 8px solid rgb(143, 143, 143);
+    border-right: 7px solid transparent;
+    border-left: 7px solid transparent;
+}
+
+li.open.jsx-357641531 .arrow.jsx-357641531 {
+    border-top: none;
+    border-bottom: 8px solid rgb(143, 143, 143);
+}
+
+li.question-item--kindergarten.open.jsx-357641531 p.jsx-357641531{
+	color:rgb(231, 108, 7);
+}
+
+.pagination.jsx-2419612476 {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 36px;
+    margin-top: 16px;
+}
+.pagination.jsx-2419612476 li.jsx-2419612476 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 14px;
+    color: rgb(102, 102, 102);
+    cursor: pointer;
+    margin: auto 14px;
+}
+ol, ul {
+    list-style: none;
+}
+.pagination--kindergarten.jsx-2419612476 li.on.jsx-2419612476 {
+    color: rgb(231, 108, 7);
+}
+.content.jsx-357641531 {
+  list-style: none;
+	box-sizing: border-box;
+	outline: none;
+	font-family: 'Noto Sans KR', sans-serif;
+	text-rendering: optimizeSpeed;
+	-webkit-font-smoothing: antialiased;
+	margin: 0;
+	border: 0;
+	color: #212121;
+	vertical-align: baseline;
+	font-size: 14px;
+	border-top: 0px;
+	padding: 16px 16px 32px;
+}
+.editor.jsx-2567501591 * {
+    color: rgb(33, 33, 33);
+}
+.fr-view {
+    word-wrap: break-word;
+}
+li.question-item--kindergarten.open.jsx-357641531 {
+    background-color: rgb(252, 249, 246);
+}
+li.open.jsx-357641531 {
+    background-color: rgb(246, 248, 252);
+}
+
+
+
+
+
+
+
+

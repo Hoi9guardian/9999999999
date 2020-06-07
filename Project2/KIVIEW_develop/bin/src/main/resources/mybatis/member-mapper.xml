@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+   <!-- 로그인 -->
+   <select id="selectOne" parameterType="memberVo" resultType="memberVo">
+      SELECT * FROM MEMBER
+      WHERE MEMBER_ID = #{member_id}
+   </select>
+
+   <!-- 아이디찾기 -->
+   <select id="idSearch" parameterType="memberVo" resultType="memberVo">
+      SELECT * FROM MEMBER
+      WHERE MEMBER_NAME = #{member_name} AND MEMBER_EMAIL = #{member_email}
+   </select>
+   
+   <!-- 회원가입 -->
+   <insert id="signup" parameterType="memberVo">
+      INSERT INTO MEMBER
+      VALUES(member_seq.nextval, #{member_id}, #{member_pwd}, #{member_name}, #{member_addr}, #{member_phone}, #{member_email})
+   </insert>
+   
+   <!-- 아이디중복확인 -->
+   <select id="signupIdChk" parameterType="memberVo" resultType="memberVo">
+      SELECT * FROM MEMBER
+      WHERE MEMBER_ID = #{member_id}
+   </select>
+
+   <!-- 회원 정보 수정 -->
+   <update id="updateMember" parameterType="memberVo">
+      UPDATE MEMBER SET
+      MEMBER_PWD = #{member_pwd},
+      MEMBER_ADDR = #{member_addr},
+      MEMBER_PHONE = #{member_phone}
+      WHERE MEMBER_ID = #{member_id}
+   </update>
+
+
+   <!-- 회원 탈퇴 -->
+   <delete id="deleteMember" parameterType="memberVo">
+      DELETE FROM MEMBER
+      WHERE MEMBER_ID = #{member_id} AND MEMBER_PWD = #{member_pwd}
+   </delete>
+   
+   <!-- 비밀번호 변경 -->
+   <select id="findPwd" parameterType="memberVo" resultType="int">
+      SELECT COUNT(*) FROM MEMBER 
+      WHERE MEMBER_ID = #{member_id} AND MEMBER_EMAIL = #{member_email}
+   </select>
+   
+   <!-- 소셜로그인 이메일아이디 확인 -->
+   <select id="selectEmail" parameterType="String" resultType="memberVo">
+      SELECT * FROM MEMBER
+      WHERE MEMBER_ID = #{snsEmail}
+   </select>
+   
+   <!-- 임시비밀번호 저장 -->
+   <update id="tmpPwd" parameterType="memberVo" >
+      UPDATE MEMBER SET
+      MEMBER_PWD = #{member_pwd}
+      WHERE MEMBER_ID = #{member_id}
+   </update>
+   
+   <!-- 메인 페이지  멤버 수  -->
+   <select id="membercount" resultType="int">
+   	  SELECT COUNT(*) FROM MEMBER
+   </select>
+
+   
+
+</mapper>
+
+
+
+
