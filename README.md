@@ -1,7 +1,7 @@
 # projectlist
 Hoi9guardian's project repository
 
-<h1>** 개인 계정 관련 된 내용 삭제하였습니다.</h1>
+<h5>** 개인 계정 관련 된 내용 삭제하였습니다.</h5>
 
 <ul><h1>project_1</h1>
   <li><h2>프로젝트명</h2></li>
